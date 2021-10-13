@@ -222,8 +222,8 @@ task run_results_file_gen {
         meanmapq_trim = meanmapq_trim_array[index]
         assembly_mean_coverage = assembly_mean_coverage_array[index]
         pangolin_conflicts = pangolin_conflicts_array[index]
-        nextclade_aa_subs = nextclade_aa_subs_array[index]
-        nextclade_aa_dels = nextclade_aa_dels_array[index]
+        nextclade_aa_subs = nextclade_aa_subs_array[index].replace(',','|')
+        nextclade_aa_dels = nextclade_aa_dels_array[index].replace(',','|')
         nextclade_clade = nextclade_clade_array[index]
         pango_version = pango_version_array[index]
         outfile.write(f'{samplename},{batchid},seq_date,{assembly_status},{pango_lineage},{pangolin_conflicts},{pango_version},{nextclade_clade},{nextclade_aa_subs},{nextclade_aa_dels},{fastqc_raw},{fastqc_clean},{assembly_mean_coverage},{percent_reference_coverage},{kraken_human},{kraken_sc2},{kraken_human_dehosted},{kraken_sc2_dehosted},{number_N},{number_Degenerate},{assembly_length_unambiguous},{number_Total},{meanbaseq_trim},{meanmapq_trim}\n')
