@@ -1,1 +1,1 @@
-# wdl_workflows
+# wdl_scripts
