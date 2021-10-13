@@ -1,8 +1,8 @@
 version: 1.2
 workflows:
- - name: sphl_lims_prep
+ - name: sphl_lims_file_prep
    subclass: WDL
-   primaryDescriptorPath: /workflows/wf_sphl_lims_prep.wdl
+   primaryDescriptorPath: /workflows/wf_sphl_lims_file_prep.wdl
  - name: sphl_lims_file_gen
    subclass: WDL
-   primaryDescriptorPath: /workflows/wf_lims_file_gen.wdl
+   primaryDescriptorPath: /workflows/wf_sphl_lims_file_gen.wdl
