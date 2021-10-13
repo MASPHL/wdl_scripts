@@ -245,4 +245,3 @@ task run_results_file_gen {
     cpu: 1
   }
 }
-
