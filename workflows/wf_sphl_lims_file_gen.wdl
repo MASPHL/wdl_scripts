@@ -103,8 +103,8 @@ task lims_file_gen {
     pango_version_array=['~{sep="','" pango_version}']
     pango_version_array_len=len(pango_version_array)
 
-    import datetime
-    outfile = open(f'{datetime.datetime.now().strftime("%Y-%m-%d")}.lims_file.csv', 'w')
+    from datetime import datetime, timezone, timedelta
+    outfile = open(f'{datetime.now(timezone(timedelta(hours=-4))).strftime("%Y-%m-%d")}.lims_file.csv', 'w')
     if samplename_array_len == assembly_status_array_len == tool_lineage_array_len == lineage_maven_array_len == pango_version_array_len:
       outfile.write('sample_id,assembly_status,tool_lineage,lineage_to_maven,pango_version,organism,test\n')
       index = 0
@@ -200,8 +200,8 @@ task run_results_file_gen {
         unequal += 1
 
     print(f'Number unequal to samplename_array {unequal}')
-    import datetime
-    outfile = open(f'{datetime.datetime.now().strftime("%Y-%m-%d")}.run_results.csv', 'w')
+    from datetime import datetime, timezone, timedelta
+    outfile = open(f'{datetime.now(timezone(timedelta(hours=-4))).strftime("%Y-%m-%d")}.run_results.csv', 'w')
     if unequal == 0:
       outfile.write('sample_id,batch_id,seq_date,assembly_status,pangolin_lineage,pangolin_conflict,pangolin_version,nextclade_lineage,AA_substitutions,AA_deletions,fastqc_raw_reads,fastqc_clean_reads,mean_depth,percent_reference_coverage,%_human_reads,%_SARS-COV-2_reads,dehosted_%human,dehosted_%SC2,num_N,num_degenerate,num_ACTG,num_total,meanbaseq_trim,meanmapq_trim\n')
 
