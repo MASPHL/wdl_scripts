@@ -6,3 +6,6 @@ workflows:
  - name: sphl_lims_file_gen
    subclass: WDL
    primaryDescriptorPath: /workflows/wf_sphl_lims_file_gen.wdl
+ - name: genomic_cluster_analysis
+   subclass: WDL
+   primaryDescriptorPath: /workflows/wf_genomic_cluster_analysis.wdl
