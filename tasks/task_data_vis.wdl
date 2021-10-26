@@ -18,7 +18,7 @@ task cluster_render {
     cp ~{ml_tree} ml_tree.tree
 
     if [[ -f "~{render_template}" ]]; then cp ~{render_template} render_template.Rmd
-    else wget -O render_template.Rmd https://raw.githubusercontent.com/AndrewLangvt/genomic_report/master/cluster_report_template.Rmd; fi
+    else wget -O render_template.Rmd https://raw.githubusercontent.com/MASPHL/templates/v1.0/cluster_report_template.Rmd; fi
 
     R --no-save <<CODE
 
