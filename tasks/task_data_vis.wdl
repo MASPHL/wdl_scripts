@@ -7,6 +7,7 @@ task cluster_render {
     File      ml_tree
     String    cluster_name
     String    facility
+    String    timezone
     File?     render_template
   }
 
@@ -44,8 +45,11 @@ task cluster_render {
     render(report, output_file='report.pdf')
     CODE
 
-    cp pairwise_snp_list.csv ~{cluster_name}_pairwise_snp_list.csv
-    cp report.pdf ~{cluster_name}_cluster_analysis.pdf
+    ~{default='' 'export TZ=' + timezone}
+    date +"%Y-%m-%d" > TODAY
+    
+    cp pairwise_snp_list.csv ~{cluster_name}_pairwise_snp_list_${TODAY}.csv
+    cp report.pdf ~{cluster_name}_cluster_analysis_${TODAY}.pdf
     cp SNP_heatmap.png ~{cluster_name}_SNP_heatmap.png      
   >>>
   output {
