@@ -13,7 +13,7 @@ workflow genomic_cluster_analysis {
     Array[File]   genomes
     String        cluster_name="Cluster_Analysis"
     String        facility=""
-    String?       timezone=""
+    String        timezone=""
     File?         render_template
   }
 
