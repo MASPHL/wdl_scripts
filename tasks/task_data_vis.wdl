@@ -6,6 +6,7 @@ task cluster_render {
     File      snp_matrix
     File      ml_tree
     String    cluster_name
+    String    facility
     File?     render_template
   }
 
