@@ -20,6 +20,9 @@ task cluster_render {
     if [[ -f "~{render_template}" ]]; then cp ~{render_template} render_template.Rmd
     else wget -O render_template.Rmd https://raw.githubusercontent.com/MASPHL/templates/v1.0/cluster_report_template.Rmd; fi
 
+    sed -i "s/Genomic\ Analysis/~{facility}\ Genomic\ Analysis/" render_template.Rmd
+    grep "Genomic Analysis" render_template.Rmd
+ 
     R --no-save <<CODE
 
     library(rmarkdown)
