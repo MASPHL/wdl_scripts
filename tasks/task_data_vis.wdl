@@ -47,15 +47,15 @@ task cluster_render {
 
     ~{default='' 'export TZ=' + timezone}
         
-    cp pairwise_snp_list.csv ~{cluster_name}_pairwise_snp_list_${date +"%Y-%m-%d"}.csv
-    cp report.pdf ~{cluster_name}_cluster_analysis_${date +"%Y-%m-%d"}.pdf
+    cp pairwise_snp_list.csv ~{cluster_name}_pairwise_snp_list_$(date +"%Y-%m-%d").csv
+    cp report.pdf ~{cluster_name}_cluster_analysis_$(date +"%Y-%m-%d").pdf
     cp SNP_heatmap.png ~{cluster_name}_SNP_heatmap.png      
   >>>
   output {
     String     date = read_string("DATE")
     String     r_version = read_string("R_VERSION")
     File       analysis_doc = select_first(glob("*_cluster_analysis.pdf"))
-    File       snp_heatmap = "${cluster_name}_SNP_heatmap.png"
+    File       snp_heatmap = select_first(glob("*_SNP_heatmap.png"))
     File       snp_list = select_first(glob("*_pairwise_snp_list.csv"))
   }
 
