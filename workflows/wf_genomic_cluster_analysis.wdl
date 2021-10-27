@@ -12,6 +12,7 @@ workflow genomic_cluster_analysis {
   input {
     Array[File]   genomes
     String        cluster_name="Cluster_Analysis"
+    String        facility=""
     File?         render_template
   }
 
@@ -32,6 +33,7 @@ workflow genomic_cluster_analysis {
   call vis.cluster_render {
     input:
       cluster_name    = cluster_name,
+      facility        = facility, 
       snp_matrix      = snp_dists.snp_matrix,
       ml_tree         = iqtree.ml_tree,
       render_template = render_template
