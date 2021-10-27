@@ -46,10 +46,9 @@ task cluster_render {
     CODE
 
     ~{default='' 'export TZ=' + timezone}
-    date +"%Y-%m-%d" > TODAY
-    
-    cp pairwise_snp_list.csv ~{cluster_name}_pairwise_snp_list_${TODAY}.csv
-    cp report.pdf ~{cluster_name}_cluster_analysis_${TODAY}.pdf
+        
+    cp pairwise_snp_list.csv ~{cluster_name}_pairwise_snp_list_${date +"%Y-%m-%d"}.csv
+    cp report.pdf ~{cluster_name}_cluster_analysis_${date +"%Y-%m-%d"}.pdf
     cp SNP_heatmap.png ~{cluster_name}_SNP_heatmap.png      
   >>>
   output {
