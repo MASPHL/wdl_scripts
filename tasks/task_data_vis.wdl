@@ -22,7 +22,6 @@ task cluster_render {
 
     R --no-save <<CODE
 
-    #tinytex::reinstall_tinytex()
     library(rmarkdown)
     library(tools)
 
