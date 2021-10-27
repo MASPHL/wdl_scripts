@@ -54,9 +54,9 @@ task cluster_render {
   output {
     String     date = read_string("DATE")
     String     r_version = read_string("R_VERSION")
-    File       analysis_doc = "${cluster_name}_cluster_analysis.pdf"
+    File       analysis_doc = select_first(glob("*_cluster_analysis.pdf"))
     File       snp_heatmap = "${cluster_name}_SNP_heatmap.png"
-    File       snp_list = "${cluster_name}_pairwise_snp_list.csv"
+    File       snp_list = select_first(glob("*_pairwise_snp_list.csv"))
   }
 
   runtime {
