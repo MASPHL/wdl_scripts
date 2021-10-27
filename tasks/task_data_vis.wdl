@@ -6,8 +6,8 @@ task cluster_render {
     File      snp_matrix
     File      ml_tree
     String    cluster_name
-    String    facility
-    String    timezone
+    String    facility=""
+    String    timezone="America/New_York"
     File?     render_template
   }
 
