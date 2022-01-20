@@ -52,11 +52,11 @@ task lims_prep {
   }
   command <<<
     python3 <<CODE
-    if ~{percent_reference_coverage} >= ~{cov_threshold} and ~{meanbaseq} >= 30 and ~{meanmapq} >= 30:
+    if ~{percent_reference_coverage} >= ~{cov_threshold} and ~{meanbaseq} >= 20 and ~{meanmapq} >= 20:
       with open("STATUS", 'wt') as thing: thing.write("PASS")
       with open("TOOL_LIN", 'wt') as thing: thing.write("~{pango_lineage}")
       with open("MAV_LIN", 'wt') as thing: thing.write("~{pango_lineage}")
-    elif ~{percent_reference_coverage} < ~{cov_threshold} or ~{meanbaseq} < 30 or ~{meanmapq} < 30:
+    elif ~{percent_reference_coverage} < ~{cov_threshold} or ~{meanbaseq} < 20 or ~{meanmapq} < 20:
       with open("STATUS", 'wt') as thing: thing.write("FAIL")
       with open("TOOL_LIN", 'wt') as thing: thing.write("INVALID")
       with open("MAV_LIN", 'wt') as thing: thing.write("INVALID")
