@@ -30,7 +30,7 @@ workflow sphl_lims_prep {
   output {
     String    assembly_status  = lims_prep.assembly_status
     String    tool_lineage     = lims_prep.tool_lineage
-    String    lineage_to_maven = lims_prep.lineage_to_maven
+    String    lineage_to_maven = lims_prep.tool_lineage
     String    pango_version    = pangolin_version
     String    organism         = "SARS-CoV-2"
     String    test             = "SARS-CoV-2 Sequencing"
