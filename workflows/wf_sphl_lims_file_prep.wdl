@@ -43,10 +43,10 @@ workflow sphl_lims_prep {
 task lims_prep {
   input {
     String    samplename
-    Float     percent_reference_coverage
-    Float     meanbaseq
-    Float     meanmapq
-    String    pango_lineage
+    Float     percent_reference_coverage = 0.0
+    Float     meanbaseq = 0.0
+    Float     meanmapq = 0.0
+    String    pango_lineage = ""
     Float     cov_threshold
     String    docker
   }
