@@ -23,6 +23,7 @@ workflow sphl_lims_file_gen {
     Array[Float]     meanbaseq_trim
     Array[Float]     meanmapq_trim
     Array[Float]     assembly_mean_coverage
+    Array[String]    tool_lineage
     Array[String]    pango_lineage
     Array[String]    pangolin_conflicts
     Array[String]    pango_version
@@ -38,7 +39,7 @@ workflow sphl_lims_file_gen {
     input:
       samplename       = samplename,
       assembly_status  = assembly_status, 
-      tool_lineage     = pango_lineage,
+      tool_lineage     = tool_lineage,
       lineage_to_maven = lineage_to_maven,
       pango_version    = pango_version,
       organism         = organism,
