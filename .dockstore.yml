@@ -9,3 +9,6 @@ workflows:
  - name: genomic_cluster_analysis
    subclass: WDL
    primaryDescriptorPath: /workflows/wf_genomic_cluster_analysis.wdl
+ - name: amplicon_coverage
+   subclass: WDL
+   primaryDescriptorPath: /workflows/wf_amplicon_coverage.wdl
