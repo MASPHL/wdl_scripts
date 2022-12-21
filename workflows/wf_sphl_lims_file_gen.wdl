@@ -1,16 +1,16 @@
-version 1.0
+version 1.1
 
 workflow sphl_lims_file_gen {
   meta {
-    description: "Takes output from Theiagens Titan_ClearLabs and Titan_Illumina_PE and aggregates for LIMS integration"
+    description: "Takes output from Theiagens TheiaCoV_ClearLabs and TheiaCoV_Illumina_PE and aggregates for LIMS integration"
   }
   input {
     Array[String]    samplename
     Array[String]    batchid
     Array[String]    seqdate
     Array[String]    assembly_status
-    Array[Int]       fastqc_raw
-    Array[Int]       fastqc_clean
+    Array[Int]       reads_raw
+    Array[Int]       reads_clean
     Array[Float]     kraken_human
     Array[Float]     kraken_sc2
     Array[Float]     kraken_human_dehosted
@@ -25,7 +25,6 @@ workflow sphl_lims_file_gen {
     Array[Float]     assembly_mean_coverage
     Array[String]    tool_lineage
     Array[String]    pango_lineage
-    Array[String]    pangolin_conflicts
     Array[String]    pango_version
     Array[String]    nextclade_aa_subs
     Array[String]    nextclade_aa_dels
@@ -53,8 +52,8 @@ workflow sphl_lims_file_gen {
       seqdate                     = seqdate,
       assembly_status             = assembly_status,
       pango_lineage               = pango_lineage,
-      fastqc_raw                  = fastqc_raw,
-      fastqc_clean                = fastqc_clean,
+      reads_raw                   = reads_raw,
+      reads_clean                 = reads_clean,
       kraken_human                = kraken_human,
       kraken_sc2                  = kraken_sc2,
       kraken_human_dehosted       = kraken_human_dehosted, 
@@ -67,7 +66,6 @@ workflow sphl_lims_file_gen {
       meanbaseq_trim              = meanbaseq_trim,
       meanmapq_trim               = meanmapq_trim,
       assembly_mean_coverage      = assembly_mean_coverage,
-      pangolin_conflicts          = pangolin_conflicts,
       nextclade_aa_subs           = nextclade_aa_subs,
       nextclade_aa_dels           = nextclade_aa_dels,
       nextclade_clade             = nextclade_clade,
@@ -142,8 +140,8 @@ task run_results_file_gen {
     Array[String]    seqdate
     Array[String]    assembly_status
     Array[String]    pango_lineage
-    Array[Int]       fastqc_raw
-    Array[Int]       fastqc_clean
+    Array[Int]       reads_raw
+    Array[Int]       reads_clean
     Array[Float]     kraken_human
     Array[Float]     kraken_sc2
     Array[Float]     kraken_human_dehosted
@@ -156,7 +154,6 @@ task run_results_file_gen {
     Array[Float]     meanbaseq_trim
     Array[Float]     meanmapq_trim
     Array[Float]     assembly_mean_coverage
-    Array[String]    pangolin_conflicts
     Array[String]    nextclade_aa_subs
     Array[String]    nextclade_aa_dels
     Array[String]    nextclade_clade
@@ -170,8 +167,8 @@ task run_results_file_gen {
     seq_date_array=['~{sep="','" seqdate}']
     assembly_status_array=['~{sep="','" assembly_status}']
     pango_lineage_array=['~{sep="','" pango_lineage}']
-    fastqc_raw_array=['~{sep="','" fastqc_raw}']
-    fastqc_clean_array=['~{sep="','" fastqc_clean}']
+    reads_raw_array=['~{sep="','" reads_raw}']
+    reads_clean_array=['~{sep="','" reads_clean}']
     kraken_human_array=['~{sep="','" kraken_human}']
     kraken_sc2_array=['~{sep="','" kraken_sc2}']
     kraken_human_dehosted_array=['~{sep="','" kraken_human_dehosted}']
@@ -184,13 +181,12 @@ task run_results_file_gen {
     meanbaseq_trim_array=['~{sep="','" meanbaseq_trim}']
     meanmapq_trim_array=['~{sep="','" meanmapq_trim}']
     assembly_mean_coverage_array=['~{sep="','" assembly_mean_coverage}']
-    pangolin_conflicts_array=['~{sep="','" pangolin_conflicts}']
     nextclade_aa_subs_array=['~{sep="','" nextclade_aa_subs}']
     nextclade_aa_dels_array=['~{sep="','" nextclade_aa_dels}']
     nextclade_clade_array=['~{sep="','" nextclade_clade}']
     pango_version_array=['~{sep="','" pango_version}']
 
-    fields = [batchid_array,assembly_status_array,pango_lineage_array,fastqc_raw_array,fastqc_clean_array,kraken_human_array,kraken_sc2_array,kraken_human_dehosted_array,kraken_sc2_dehosted_array,number_N_array,assembly_length_unambiguous_array,number_Degenerate_array,number_Total_array,percent_reference_coverage_array,meanbaseq_trim_array,meanmapq_trim_array,assembly_mean_coverage_array,pangolin_conflicts_array,nextclade_aa_subs_array,nextclade_aa_dels_array,nextclade_clade_array,pango_version_array]
+    fields = [batchid_array,assembly_status_array,pango_lineage_array,reads_raw_array,reads_clean_array,kraken_human_array,kraken_sc2_array,kraken_human_dehosted_array,kraken_sc2_dehosted_array,number_N_array,assembly_length_unambiguous_array,number_Degenerate_array,number_Total_array,percent_reference_coverage_array,meanbaseq_trim_array,meanmapq_trim_array,assembly_mean_coverage_array,nextclade_aa_subs_array,nextclade_aa_dels_array,nextclade_clade_array,pango_version_array]
 
     # count number of elements in each list. If not all equal, will not populate into table. 
     unequal = 0
@@ -204,7 +200,7 @@ task run_results_file_gen {
     from datetime import datetime, timezone, timedelta
     outfile = open(f'{datetime.now(timezone(timedelta(hours=-4))).strftime("%Y-%m-%d")}.run_results.csv', 'w')
     if unequal == 0:
-      outfile.write('sample_id,batch_id,seq_date,assembly_status,pangolin_lineage,pangolin_conflict,pangolin_version,nextclade_lineage,AA_substitutions,AA_deletions,fastqc_raw_reads,fastqc_clean_reads,mean_depth,percent_reference_coverage,%_human_reads,%_SARS-COV-2_reads,dehosted_%human,dehosted_%SC2,num_N,num_degenerate,num_ACTG,num_total,meanbaseq_trim,meanmapq_trim\n')
+      outfile.write('sample_id,batch_id,seq_date,assembly_status,pangolin_lineage,pangolin_version,nextclade_lineage,AA_substitutions,AA_deletions,raw_reads,clean_reads,mean_depth,percent_reference_coverage,%_human_reads,%_SARS-COV-2_reads,dehosted_%human,dehosted_%SC2,num_N,num_degenerate,num_ACTG,num_total,meanbaseq_trim,meanmapq_trim\n')
 
       index = 0
       while index < len(samplename_array):
@@ -213,8 +209,8 @@ task run_results_file_gen {
         seq_date = seq_date_array[index]
         assembly_status = assembly_status_array[index]
         pango_lineage = pango_lineage_array[index]
-        fastqc_raw = fastqc_raw_array[index]
-        fastqc_clean = fastqc_clean_array[index]
+        reads_raw = reads_raw_array[index]
+        reads_clean = reads_clean_array[index]
         kraken_human = kraken_human_array[index]
         kraken_sc2 = kraken_sc2_array[index]
         kraken_human_dehosted = kraken_human_dehosted_array[index]
@@ -227,12 +223,11 @@ task run_results_file_gen {
         meanbaseq_trim = meanbaseq_trim_array[index]
         meanmapq_trim = meanmapq_trim_array[index]
         assembly_mean_coverage = assembly_mean_coverage_array[index]
-        pangolin_conflicts = pangolin_conflicts_array[index]
         nextclade_aa_subs = nextclade_aa_subs_array[index].replace(',','|')
         nextclade_aa_dels = nextclade_aa_dels_array[index].replace(',','|')
         nextclade_clade = nextclade_clade_array[index].replace(',','')
         pango_version = pango_version_array[index]
-        outfile.write(f'{samplename},{batchid},{seq_date},{assembly_status},{pango_lineage},{pangolin_conflicts},{pango_version},{nextclade_clade},{nextclade_aa_subs},{nextclade_aa_dels},{fastqc_raw},{fastqc_clean},{assembly_mean_coverage},{percent_reference_coverage},{kraken_human},{kraken_sc2},{kraken_human_dehosted},{kraken_sc2_dehosted},{number_N},{number_Degenerate},{assembly_length_unambiguous},{number_Total},{meanbaseq_trim},{meanmapq_trim}\n')
+        outfile.write(f'{samplename},{batchid},{seq_date},{assembly_status},{pango_lineage},{pango_version},{nextclade_clade},{nextclade_aa_subs},{nextclade_aa_dels},{reads_raw},{reads_clean},{assembly_mean_coverage},{percent_reference_coverage},{kraken_human},{kraken_sc2},{kraken_human_dehosted},{kraken_sc2_dehosted},{number_N},{number_Degenerate},{assembly_length_unambiguous},{number_Total},{meanbaseq_trim},{meanmapq_trim}\n')
         index += 1
     else: 
       print(f'Input arrays are of unequal length.')
@@ -251,4 +246,3 @@ task run_results_file_gen {
     cpu: 1
   }
 }
-
