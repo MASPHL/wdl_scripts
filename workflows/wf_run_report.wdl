@@ -145,7 +145,7 @@ task seqreport_render {
     cp ~{primers} annotated_primers.csv
        
     if [[ -f "~{render_template}" ]]; then cp ~{render_template} render_template.Rmd
-    else wget -O render_template.Rmd https://raw.githubusercontent.com/bmtalbot/APHL_COVID_Genomics/main/Sars-Cov-2-Seq_Report.Rmd; fi
+    else wget -O render_template.Rmd https://raw.githubusercontent.com/bmtalbot/APHL_COVID_Genomics/main/sc2-report-v2; fi
 
     R --no-save <<CODE
 
