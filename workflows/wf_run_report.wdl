@@ -76,7 +76,7 @@ task download_entities_csv {
         headers[x] = 0
         if type(outrow[x]) == dict and set(outrow[x].keys()) == set(('itemsType', 'items')):
           outrow[x] = outrow[x]['items']
-      outrow[table_name + "_id"] = row['name']
+      outrow[id_column] = row['name']
       rows.append(outrow)
        
     with open(out_fname, 'wt') as outf:
