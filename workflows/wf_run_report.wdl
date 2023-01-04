@@ -29,6 +29,8 @@ workflow seq_run_report {
       seq_output      = download_entities_csv.csv_file,
       batch_ID        = batch_id,
       render_template = render_template
+      amp_coverage = amp_coverage
+      primers = primers
   }
   
   output {
@@ -124,6 +126,8 @@ task seqreport_render {
   input {
     File      seq_output
     String    batch_ID
+    File      amp_coverage
+    File      primers
     File?     render_template
   }
 
