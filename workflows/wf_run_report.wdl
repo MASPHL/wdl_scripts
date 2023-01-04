@@ -63,12 +63,13 @@ task download_entities_csv {
     workspace_project = '~{terra_project}'
     workspace_name = '~{workspace_name}'
     table_name = '~{table_name}'
+    id_column = '~{id_column}'
     out_fname = '~{table_name}'+f'_table_{datetime.now(timezone(timedelta(hours=-4))).strftime("%Y-%m-%d")}'+'.csv'
 
     table = json.loads(fapi.get_entities(workspace_project, workspace_name, table_name).text)
     headers = collections.OrderedDict()
     rows = []
-    headers[table_name + "_id"] = 0
+    headers[id_column] = 0
     for row in table:
       outrow = row['attributes']
       for x in outrow.keys():
