@@ -28,8 +28,8 @@ workflow seq_run_report {
     input:
       seq_output      = download_entities_csv.csv_file,
       batch_ID        = batch_id,
-      render_template = render_template
-      amp_coverage    = amp_coverage
+      render_template = render_template,
+      amp_coverage    = amp_coverage,
       primers         = primers
   }
   
