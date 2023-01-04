@@ -1,4 +1,4 @@
-version 1.0
+version development
 
 workflow seq_run_report {
   meta {
@@ -11,6 +11,8 @@ workflow seq_run_report {
     String    table_name
     String    id_column
     String    batch_id="BATCH_ID"
+    File      amp_coverage  ## ADDED TO BRING IN THE BATCH AMPLICON COVERAGE
+    File      primers  ## hypothetical workspace file with the primers annotated with gene sites from gff
     File?     render_template
   }
 
@@ -131,6 +133,12 @@ task seqreport_render {
     R --version | head -n1 | sed 's/).*/)/' | tee R_VERSION
 
     cp ~{seq_output} sequencerun_data.csv
+   
+   ### COPIES THE AMPLICON COVERAGE FILE THAT IS SUPPLIED BY THE WORKFLOW
+    cp ~{amp_coverage} amp_coverage.txt
+    
+   ### HYPOTHETICAL PRIMER FILE FROM THE WORKSPACE
+    cp ~{primers} annotated_primers.csv
        
     if [[ -f "~{render_template}" ]]; then cp ~{render_template} render_template.Rmd
     else wget -O render_template.Rmd https://raw.githubusercontent.com/bmtalbot/APHL_COVID_Genomics/main/Sars-Cov-2-Seq_Report.Rmd; fi
@@ -156,7 +164,7 @@ task seqreport_render {
     }
 
   runtime {
-    docker:       "bmtalbot/sc2-seq-report:0.3"
+    docker:       "bmtalbot/sc2-seq-report:0.3" # update the docker image with the appropriate R code pull
     memory:       "2 GB"
     cpu:          2
     disks:        "local-disk 100 SSD"
