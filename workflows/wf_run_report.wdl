@@ -10,7 +10,7 @@ workflow seq_run_report {
     #String    workspace_name
     #String    table_name
     #String    id_column
-    #String    batch_id="BATCH_ID"
+    String    batch_id="BATCH_ID"
     File      run_results_file
     File      amp_coverage  ## ADDED TO BRING IN THE BATCH AMPLICON COVERAGE
     File      primers  ## hypothetical workspace file with the primers annotated with gene sites from gff
