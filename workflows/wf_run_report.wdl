@@ -138,10 +138,10 @@ task seqreport_render {
 
     cp ~{seq_output} sequencerun_data.csv
    
-   ### COPIES THE AMPLICON COVERAGE FILE THAT IS SUPPLIED BY THE WORKFLOW
+    # COPIES THE AMPLICON COVERAGE FILE THAT IS SUPPLIED BY THE WORKFLOW
     cp ~{amp_coverage} amp_coverage.txt
     
-   ### HYPOTHETICAL PRIMER FILE FROM THE WORKSPACE
+    # HYPOTHETICAL PRIMER FILE FROM THE WORKSPACE
     cp ~{primers} annotated_primers.csv
        
     if [[ -f "~{render_template}" ]]; then cp ~{render_template} render_template.Rmd
