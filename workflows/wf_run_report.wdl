@@ -6,28 +6,28 @@ workflow seq_run_report {
   }
 
   input {
-    #String    terra_project
-    #String    workspace_name
-    #String    table_name
-    #String    id_column
+    String    terra_project
+    String    workspace_name
+    String    table_name
+    String    id_column
     String    batch_id="BATCH_ID"
-    File      run_results_file
+    #File      run_results_file
     File      amp_coverage  ## ADDED TO BRING IN THE BATCH AMPLICON COVERAGE
     File      primers  ## hypothetical workspace file with the primers annotated with gene sites from gff
     File?     render_template
   }
 
-  #call download_entities_csv {
-    #input:
-      #terra_project  = terra_project, 
-      #workspace_name = workspace_name,
-      #table_name     = table_name,
-      #id_column      = id_column
-  #}
+  call download_entities_csv {
+    input:
+      terra_project  = terra_project, 
+      workspace_name = workspace_name,
+      table_name     = table_name,
+      id_column      = id_column
+  }
   
     call seqreport_render {
     input:
-      seq_output      = run_results_file, #use run_results_file instead of download_entities_csv.csv_file
+      seq_output      = download_entities_csv.csv_file,
       batch_ID        = batch_id,
       render_template = render_template,
       amp_coverage    = amp_coverage,
@@ -35,7 +35,7 @@ workflow seq_run_report {
   }
   
   output {
-    #File    table_file   = download_entities_csv.csv_file
+    File    table_file   = download_entities_csv.csv_file
     File    analysis_doc = seqreport_render.analysis_doc
   }
 }
