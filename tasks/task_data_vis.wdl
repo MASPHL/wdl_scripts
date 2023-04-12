@@ -60,7 +60,7 @@ task cluster_render {
   }
 
   runtime {
-    docker:       "staphb/cluster-report-env:1.0"
+    docker:       "quay.io/wslh-bioinformatics/ar-report:1.0.0"
     memory:       "2 GB"
     cpu:          2
     disks:        "local-disk 100 SSD"
