@@ -60,7 +60,7 @@ task cluster_render {
   }
 
   runtime {
-    docker:       "quay.io/wslh-bioinformatics/ar-report:1.0.0"
+    docker:       "bmtalbot/sc2-seq-report:0.4"
     memory:       "2 GB"
     cpu:          2
     disks:        "local-disk 100 SSD"
